@@ -4,22 +4,23 @@ node{
     // Set Java 21 as the runtime
     env.JAVA_HOME = tool 'Java21'
     
-    stage('Checkout') {
-        checkout scm
-    }
-
-    stage('Build') {
-        sh 'echo Building with Java 21...'
-        sh 'mvn clean compile'
+    stage('build') {
+        try {
+        sh 'echo "build stage"'
+        }
+        catch(Exception e) {
+            sh 'echo "build failed"'
+            throw e
+        }
     }
 
     stage('Test') {
-        sh 'echo Testing...'
-        sh 'mvn test'
+        if (env.BRANCH_NAME == 'feat') {
+            sh 'echo "Test stage on main branch"'
+        
+        } else {
+            sh 'echo "skipping Test stage on non-main branch"'
+        }
     }
 
-    stage('Deploy') {
-        sh 'echo Deploying...'
-        // Add your deploy commands here
-    }
 }
