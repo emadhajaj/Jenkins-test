@@ -1,8 +1,6 @@
 node{
     git branch: 'main', url: 'https://github.com/emadhajaj/Jenkins-test.git'
-    
-    // Set Java 21 as the runtime
-    env.JAVA_HOME = tool 'Java21'
+
     
     stage('build') {
         try {
