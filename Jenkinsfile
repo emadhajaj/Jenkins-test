@@ -1,0 +1,21 @@
+node{
+    git branch: 'main', url: 'https://github.com/emadhajaj/Jenkins-test.git'
+    stage('Checkout') {
+        checkout scm
+    }
+
+    stage('Build') {
+        sh 'echo Building...'
+        // Add your build commands here
+    }
+
+    stage('Test') {
+        sh 'echo Testing...'
+        // Add your test commands here
+    }
+
+    stage('Deploy') {
+        sh 'echo Deploying...'
+        // Add your deploy commands here
+    }
+}
