@@ -1,24 +1,20 @@
-node{
-    git branch: 'main', url: 'https://github.com/emadhajaj/Jenkins-test.git'
-
+node {
+    stage('Checkout') {
+        git branch: 'main', url: 'https://github.com/emadhajaj/Jenkins-test.git'
+    }
     
-    stage('build') {
-        try {
-        sh 'echo "build stage"'
-        }
-        catch(Exception e) {
-            sh 'echo "build failed"'
-            throw e
-        }
+    stage('Build') {
+        echo 'Building the project...'
+        sh 'mvn clean compile'
     }
-
+    
     stage('Test') {
-        if (env.BRANCH_NAME == 'feat') {
-            sh 'echo "Test stage on main branch"'
-        
-        } else {
-            sh 'echo "skipping Test stage on non-main branch"'
-        }
+        echo 'Running tests...'
+        sh 'mvn test'
     }
-
+    
+    stage('Run') {
+        echo 'Running the application...'
+        sh 'mvn exec:java -Dexec.mainClass=com.example.App'
+    }
 }
